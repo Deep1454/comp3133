@@ -1,5 +1,7 @@
 const fs = require('fs')
 const zlib = require('zlib')
+const WriteWordPipe = require('./write_word_pipe')
+
 let readStream = fs.createReadStream('input_stream.txt')
 let writeSteam = fs.createWriteStream('output_stream.txt')
 
@@ -31,7 +33,11 @@ writeSteam.write('Hello')
 writeSteam.write('World')
 // writeSteam.end()
 
-//pipe
+
+// Pipe
 readStream.pipe(writeSteam)
 readStream.pipe(zlib.createGzip())
-          .pipe(fs.createWriteStream('data.gz'))
+        .pipe(fs.createWriteStream('data.gz'))
+
+readStream.pipe(new WriteWordPipe())
+            .pipe(fs.createWriteStream('word_lists.txt'))
