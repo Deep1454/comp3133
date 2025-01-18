@@ -1,0 +1,1 @@
+class WriteWordPipe extends Transform 
